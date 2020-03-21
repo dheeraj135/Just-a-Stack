@@ -10,11 +10,7 @@ hash_t* newHash()
     if ((nw = (hash_t*)calloc(1,sizeof(hash_t)) ) == NULL){
         return NULL;
     }
-    
-    if ((nw->hash = calloc(HASH_LENGTH,sizeof(unsigned char))) == NULL )
-    {
-        return NULL;
-    }
+
     return nw;
 }
 
@@ -63,22 +59,20 @@ char* getStrHash(hash_t* hash)
     return out;
 }
 
-hash_t* copyHash(hash_t* hash)
+int copyHash(hash_t* output,hash_t* input)
 {
-    hash_t* newH = newHash();
-    strncpy(newH->hash,hash->hash,HASH_LENGTH);
-    return newH;
+    strncpy(output->hash,input->hash,HASH_LENGTH);
+    return 0;
 }
 
 void deleteHash(hash_t* ht)
 {
-    free(ht->hash);
     free(ht);
 }
 
 int mergeHash (hash_t* first,   /* I - First Hash */
                 hash_t* second, /* I - Second Hash */
-                hash_t** out)   /* O- Output Hash */
+                hash_t* out)   /* O- Output Hash */
 {
     char* firstString, *secondString;
 
@@ -89,11 +83,12 @@ int mergeHash (hash_t* first,   /* I - First Hash */
     
     unsigned char string[4*HASH_LENGTH+1];
     snprintf(string,sizeof(string),"%s%s",firstString,secondString);
-    *out = computeHash(string,strlen(string));
-
-    if ((*out) == NULL)
+    hash_t* temp = computeHash(string,strlen(string));
+    copyHash(out,temp);
+    if (temp == NULL)
         return -1;
-
+        
+    deleteHash(temp);
     free(firstString);
     free(secondString);
 

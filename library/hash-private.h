@@ -5,7 +5,7 @@
 #include <hash.h>
 
 struct hash_s{
-    unsigned char *hash;
+    unsigned char hash[HASH_LENGTH];
 };
 
 #endif

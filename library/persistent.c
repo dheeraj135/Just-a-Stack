@@ -19,12 +19,6 @@ int createWritableHash(hash_t* input, writable_hash_t* output)
 {
     if (input==NULL || output == NULL) 
         return -1;
-    // if (input == NULL)
-    // {
-    //     for (int i =0 ;i<HASH_LENGTH;i++)
-    //         output->hash[i] = '#';
-    //     return 0;
-    // }
     strncpy(output->hash,input->hash,HASH_LENGTH);
     return 0;
 }
