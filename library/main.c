@@ -14,7 +14,7 @@ int main()
     pushListStr(lst,"Baby");
     pushListStr(lst,"FOFF");
     printList(lst,0);
-    // writeList("test.txt",lst);
+    writeList("test.txt",lst);
     deleteList(lst);
     // readList("test.txt");
     // fileop_t* fl = fileOpen("test.txt",WRITEAPPENDMOD);
@@ -27,15 +27,15 @@ int main()
     // fileClose(fl);
     // printf("Content: %s\n",buf);
     
-    // fileop_t* fl = fileOpen("test.txt",READMOD);
-    // writable_element_t* elem = newWritableElem();
-    // while(!iseof(fl))
-    // {
-    //     readElem(fl,elem);
-    //     printWritableElem(elem);
-    // }
-    // readKElem(fl,elem,10);
-    // free(elem);
-    // fileClose(fl);
+    fileop_t* fl = fileOpen("test.txt",READMOD);
+    element_t* elem = newElement2();
+    while(!iseof(fl))
+    {
+        readElem(fl,elem);
+        printElem(elem);
+    }
+    readKElem(fl,elem,10);
+    free(elem);
+    fileClose(fl);
     return 0;
 }

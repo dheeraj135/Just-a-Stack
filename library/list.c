@@ -61,6 +61,17 @@ element_t* newElement(data_t* dt)
     return ele;
 }
 
+element_t* newElement2()
+{
+    element_t* ele = calloc(1,sizeof(element_t));
+    return ele;
+}
+
+void printElem(element_t* elem)
+{
+    printf("%s\n",elem->info.str);
+}
+
 int computeElementHash(element_t* ele)
 {
     return mergeHash(&(ele->prevHash),&(ele->info.strhash),&(ele->hash));
@@ -119,11 +130,12 @@ list_t* newList()
     list_t* nwlist = calloc(1,sizeof(list_t));
     if(nwlist==NULL)
         return NULL;
-    data_t* dt= newData("");
-    nwlist->head = nwlist->tail = newLElement(dt);
-    deleteData(dt);
-    nwlist->curr = NULL;
-    computeElementHash(&((nwlist->head)->elem));
+    nwlist->curr = nwlist->head = nwlist->tail = NULL;
+    // data_t* dt= newData("");
+    // nwlist->head = nwlist->tail = newLElement(dt);
+    // deleteData(dt);
+    // nwlist->curr = NULL;
+    // computeElementHash(&((nwlist->head)->elem));
     return nwlist;
 }
 
@@ -133,11 +145,20 @@ int pushListData(list_t* lst , data_t* dt)
 {
     if(lst==NULL || dt==NULL)
         return -1;
-
     lelement_t* ele = newLElement(dt);
-    lst->tail->next = ele;
-    copyHash(&(ele->elem.prevHash),&(lst->tail->elem.hash));
-    lst->tail = ele;
+    if(lst->tail==NULL)
+    {
+        lst->head = lst->tail = ele;
+        hash_t* temp = HASH_NULL;
+        copyHash(&(ele->elem.prevHash),temp);
+        deleteHash(temp);
+    }
+    else
+    {
+        lst->tail->next = ele;
+        copyHash(&(ele->elem.prevHash),&(lst->tail->elem.hash));
+        lst->tail = ele;
+    }
     computeElementHash(&(lst->tail->elem));
     return 0;
 }

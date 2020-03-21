@@ -10,11 +10,11 @@ typedef struct data_s{
     hash_t strhash;
 }data_t;
 
-typedef struct element_s{
+struct element_s{
     hash_t prevHash;
     data_t info;
     hash_t hash;
-}element_t;
+};
 
 typedef struct lelement_s{
     struct lelement_s* next;
