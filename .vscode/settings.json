@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.lex": "lex",
+        "http.h": "c",
+        "signal.h": "c",
+        "list-private.h": "c"
+    }
+}
